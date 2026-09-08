@@ -1,0 +1,30 @@
+# --- environment / caches -------------------------------------------------
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# --- Excel lock files (created while a workbook is open) -------------------
+~$*.xlsx
+
+# --- generated figures ----------------------------------------------------
+# Regenerable from the scripts, so not tracked by default.
+*.png
+
+# --- trained models -------------------------------------------------------
+# Generated models are not source-controlled in this repo.
+*.joblib
+
+# --- meshes ---------------------------------------------------------------
+# 30 sweep meshes (~42 MB) regenerate from batch_make_meshes.py in seconds.
+*.msh
+
+# --- Fluent / CFD binaries ------------------------------------------------
+# Ignored in general; these are generated artefacts rather than source files.
+*.h5
+*.dat
+*.cas
+*.log
+*.trn
+cleanup-fluent-*.bat

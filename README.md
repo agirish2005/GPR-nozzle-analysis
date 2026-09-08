@@ -44,7 +44,7 @@ Surrogates (after the CFD runs are recorded in the spreadsheets):
 
 ```
 train_eps_surrogate.py  # eps -> Cf_vac      WORKS   (R2 = +0.97)
-train_surrogate.py      # shape -> Cf        FAILS   (R2 = -0.47) — kept as a result
+train_surrogate.py      # shape -> Cf        FAILS   (R2 = -0.66) — kept as a result
 ```
 
 ---
@@ -91,19 +91,24 @@ accuracy here — only its calibrated uncertainty band. Saved model:
 
 ### Shape → Cf at fixed ε — does not work
 
-24 CFD points varying `percent_bell`, `theta_n`, `theta_e` at ε = 7.706.
+**23 CFD runs** varying `percent_bell`, `theta_n`, `theta_e` at ε = 7.706.
+(The workbook has 24 rows with a valid Cf: the 23 sweep runs plus the separate
+`baseline_validated` case, which is excluded from the sweep by default.)
 
 | model | LOO RMSE | R² | vs mean-predictor |
 |---|---:|---:|---:|
-| GPR | 0.002085 | −0.467 | 16.1% **worse** |
-| GBT | 0.002420 | −0.977 | 34.8% worse |
-| Dummy (mean) | 0.001796 | −0.089 | — |
+| GPR | 0.002253 | −0.659 | 23.2% **worse** |
+| GBT | 0.002403 | −0.888 | 31.4% worse |
+| Dummy (mean) | 0.001829 | −0.093 | — |
 
-Cf varied by only 0.0068 across all 24 runs — at or below the CFD convergence
+Cf varied by only 0.0068 across all 23 runs — at or below the CFD convergence
 noise floor — and no feature correlated with Cf (all p > 0.4). No kernel or
-model configuration beat the mean-predictor. **This is a genuine result, not a
-modelling failure:** at fixed ε, bell shape has no detectable effect on Cf in
-this data, while ε itself is learned cleanly from half as many runs.
+model configuration beat the mean-predictor. Including the baseline row (n=24)
+changes nothing qualitatively: R² = −0.467, still 16.1% worse than the mean.
+
+**This is a genuine result, not a modelling failure:** at fixed ε, bell shape
+has no detectable effect on Cf in this data, while ε itself is learned cleanly
+from fewer runs still.
 
 ---
 
@@ -121,10 +126,11 @@ this data, while ε itself is learned cleanly from half as many runs.
 | `train_eps_surrogate.py`, `train_surrogate.py` | surrogates |
 | `fluent validated case/` | validated baseline case — every manual run starts here |
 | `eps_sweep_entry.xlsx` | ε-sweep CFD results (13 pts) |
-| `nozzle_sweep_entry_constant_e.xlsx` | shape-sweep CFD results (24 pts) |
+| `nozzle_sweep_entry_constant_e.xlsx` | shape-sweep CFD results (23 runs + baseline) |
 
 Not tracked: `.venv/`, `meshes/` (regenerate via `batch_make_meshes.py`),
-intermediate figures.
+figures, trained models (`*.joblib`) and Fluent binaries (`*.h5`) — all are
+generated artefacts. Run the scripts to reproduce them.
 
 ---
 
@@ -145,4 +151,3 @@ silently produces invalid geometry:
 
 Python 3.14 + `numpy`, `scipy`, `pandas`, `matplotlib`, `scikit-learn`,
 `joblib`, `openpyxl`. `engine_sizing.py` additionally needs `rocketcea`.
->>>>>>> 0f4fb7f (Clean up repo for publication: add README, track deliverables and training data)

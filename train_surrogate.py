@@ -51,12 +51,19 @@ SHEET = "Sweep results"
 FEATURES = ["percent_bell", "theta_n_deg", "theta_e_deg"]
 TARGET = "Cf"
 
-# --- outlier toggle -------------------------------------------------------
-# Put run_ids here to drop them from training, e.g. ["run_06"].
-# The script ALSO automatically re-runs with the most extreme point removed
-# and reports whether that materially changes the fit, so you can see the
-# sensitivity without editing anything.
-EXCLUDE_RUNS = []
+# --- what counts as the sweep --------------------------------------------
+# The workbook holds 24 rows with a valid Cf: the 23 SWEEP RUNS plus the
+# separate `baseline_validated` case. The shape sweep proper is the 23 runs,
+# so the baseline is excluded by default. Set this to [] to train on all 24 -
+# the conclusion is identical either way (see the note below).
+#
+#   n=23 (sweep only) : GPR R2 = -0.659, 23.2% worse than the mean-predictor
+#   n=24 (+ baseline) : GPR R2 = -0.467, 16.1% worse than the mean-predictor
+#
+# Add run_ids here to drop them from training, e.g. ["run_06"]. The script
+# ALSO automatically re-runs with the most extreme point removed and reports
+# whether that materially changes the fit.
+EXCLUDE_RUNS = ["baseline_validated"]
 
 MODEL_OUT = os.path.join(SCRIPT_DIR, "surrogate_cf_gpr.joblib")
 PLOT_OUT = os.path.join(SCRIPT_DIR, "surrogate_diagnostics.png")

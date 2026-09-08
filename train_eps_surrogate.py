@@ -16,10 +16,10 @@ Physical baseline: low-order polynomial in log(eps) - the relationship is a
 Honest baseline : DummyRegressor("mean").
 
 Contrast with the shape sweep: the earlier fixed-eps SHAPE surrogate
-(train_surrogate.py) failed - LOO R^2 = -0.467, 16.1% WORSE than predicting
-the mean - because Cf varied by only ~0.002 there, below the CFD noise floor.
-Here Cf_vac spans ~0.53 (~35% of its mean), so there is real signal to learn.
-This script prints that comparison explicitly.
+(train_surrogate.py, 23 runs) failed - LOO R^2 = -0.659, 23.2% WORSE than
+predicting the mean - because Cf varied by only ~0.007 there, at or below the
+CFD noise floor. Here Cf_vac spans ~0.52 (~31% of its mean), so there is real
+signal to learn. This script prints that comparison explicitly.
 """
 import os
 import shutil
@@ -59,8 +59,11 @@ PLOT_OUT = os.path.join(SCRIPT_DIR, "eps_surrogate_diagnostics.png")
 SEED = 0
 
 # Recorded results of the fixed-eps SHAPE sweep (from train_surrogate.py) so
-# the contrast can be printed without re-running that analysis.
-SHAPE_SWEEP = dict(n=24, rmse=0.002085, dummy_rmse=0.001796, r2=-0.467,
+# the contrast can be printed without re-running that analysis. n=23 is the
+# sweep proper; the workbook's 24th valid row is the separate
+# `baseline_validated` case. Including it gives R2=-0.467 instead of -0.659,
+# i.e. the conclusion is unchanged either way.
+SHAPE_SWEEP = dict(n=23, rmse=0.002253, dummy_rmse=0.001829, r2=-0.659,
                    spread=0.006796)
 
 

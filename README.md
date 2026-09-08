@@ -7,6 +7,8 @@ engine from CEA, generates a Rao thrust-optimised (TOP) bell contour, exports a
 watertight 2-D axisymmetric domain for ANSYS, builds structured Fluent meshes,
 and fits Gaussian-Process surrogates to the CFD results.
 
+This route takes an PyFluent path whereby a script is used to nuild the meshes utilsied in the CFD sweeps. However, if this does not work, I validated a different method. This method involves manually generateing your meshes for each geometry iteration. This is long-winded and brute force, but it DOES work.
+
 ---
 
 ## The one knob

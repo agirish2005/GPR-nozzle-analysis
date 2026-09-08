@@ -18,13 +18,6 @@ and fits Gaussian-Process surrogates to the CFD results.
 calls `load_geometry()`; nothing hardcodes geometry. Change that one number and
 every downstream artefact (contour, domain, meshes, lengths, run sheet) follows.
 
-> **Caveat.** `EXPANSION_RATIO` is a *geometry* knob. `engine_design.json`'s
-> eps-derived performance fields (`Cf`, `Isp_*`, `Me_exit`, `Re_m`, `Ae_m2`)
-> are Stage-1 values and go stale when you override ε. Use
-> `nozzle_contour.exit_conditions()` for ε-consistent values instead. For a
-> full physical re-size, change `PE_BAR` in `engine_sizing.py` and re-run it —
-> that recomputes ε from the pressure ratio.
-
 ---
 
 ## Run order

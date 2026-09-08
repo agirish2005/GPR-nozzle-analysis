@@ -1,4 +1,4 @@
-when updating nozzle config, update in this order: nozzle_contour.py → make_sweep_plan.py → batch_make_meshes.py → compute_lengths.py → make_run_sheet.py → export_domain.py
+
 
 # Rao Bell Nozzle — Parametric Geometry, CFD Sweep & Cf Surrogate
 
